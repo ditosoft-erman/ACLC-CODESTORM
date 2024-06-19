@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.left-nav {
+  display: flex;
+  gap: 20px;
+}
+.right-nav {
+  display: flex;
+  gap: 150px;
+}
+.links {
+  display: flex;
+  gap: 50px;
+}
