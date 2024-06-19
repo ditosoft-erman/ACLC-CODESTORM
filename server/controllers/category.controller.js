@@ -47,7 +47,7 @@ const updateCategory = async (req, res) => {
         if (!category) {
             return res.status(404).json({ error: 'Category not found' });
         }
-
+        
         category.name = name || category.name;
         category.desc = desc || category.desc;
         await category.save();

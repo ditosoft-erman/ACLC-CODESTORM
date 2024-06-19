@@ -28,6 +28,9 @@ app.use('/user', merchantRoute);
 const categoryRoute = require('./route/category.route');
 app.use('/category', categoryRoute);
 
+const orderRoute = require('./route/order.route');
+app.use('/order', orderRoute);
+
 
 const PORT = process.env.PORT || 5000;
 db.sequelize.sync().then(() => {

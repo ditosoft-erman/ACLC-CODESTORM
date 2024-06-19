@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id',
             },
         },
-        userId: {  // Ensure this field exists
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         price: {
             type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+        },
+        stocks: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         created_at: {

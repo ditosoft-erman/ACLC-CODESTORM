@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const addProduct = async (req, res) => {
-    const { name, desc, SKU, category_id, price } = req.body;
+    const { name, desc, SKU, category_id, price, stocks } = req.body;
     const userId = req.user.userId;
 
     if (!req.file) {
@@ -19,6 +19,7 @@ const addProduct = async (req, res) => {
             SKU,
             category_id,
             price,
+            stocks,
             userId,
             productImage,
         });
@@ -33,7 +34,7 @@ const addProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, desc, SKU, category_id, price } = req.body;
+    const { name, desc, SKU, category_id, price, stocks } = req.body;
     const userId = req.user.userId;
     try {
         const product = await Product.findOne({ where: { productId: id, userId } });
@@ -48,6 +49,7 @@ const updateProduct = async (req, res) => {
         product.SKU = SKU || product.SKU;
         product.category_id = category_id || product.category_id;
         product.price = price || product.price;
+        product.stocks = stocks || product.stocks;
 
         if (req.file) {
            
