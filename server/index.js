@@ -5,8 +5,12 @@ const db = require('./models');
 const dotenv = require('dotenv'); 
 const cookieParser = require('cookie-parser');
 
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
