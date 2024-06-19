@@ -3,17 +3,26 @@ const cors = require('cors');
 const app = express();
 const db = require('./models');
 const dotenv = require('dotenv'); 
-
+const cookieParser = require('cookie-parser');
 
 
 app.use(cors());
 dotenv.config();
 app.use(express.json());
+app.use(cookieParser());
+app.use('/public', express.static('public'));
 
 const authRoute = require('./route/auth.route');
 app.use('/auth', authRoute);
 
+const productsRoute = require('./route/product.route');
+app.use('/product', productsRoute);
 
+const merchantRoute = require('./route/merchant.route');
+app.use('/user', merchantRoute);
+
+const categoryRoute = require('./route/category.route');
+app.use('/category', categoryRoute);
 
 
 const PORT = process.env.PORT || 5000;

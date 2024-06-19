@@ -22,9 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true, // Ensure the email is unique
+            unique: true,
             validate: {
-                isEmail: true, // Email format validation
+                isEmail: true,
                 notEmpty: true,
             },
         },
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 notEmpty: true,
-                is: /^[0-9]+$/i, // Ensure it's numeric
+                is: /^[0-9]+$/i,
             },
         },
         password: {
@@ -43,53 +43,11 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             },
         },
-    });
-
-    return Users;
-};
-module.exports = (sequelize, DataTypes) => {
-    const Users = sequelize.define('Users', {
-        userId: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        firstname: {
+        role: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: 'user',
             validate: {
-                notEmpty: true,
-            },
-        },
-        lastname: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-            },
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true, // Ensure the email is unique
-            validate: {
-                isEmail: true, // Email format validation
-                notEmpty: true,
-            },
-        },
-        phone: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-                is: /^[0-9]+$/i, // Ensure it's numeric
-            },
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
+                isIn: [['user', 'merchant']],
             },
         },
     });

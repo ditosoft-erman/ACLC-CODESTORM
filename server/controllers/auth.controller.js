@@ -16,16 +16,15 @@ const register = async (req, res) => {
     }
 
     try {
-        // Check if user already exists
         const existingUser = await Users.findOne({ where: { email } });
         if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        // Hash the password
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create new user
+
         const newUser = await Users.create({
             firstname,
             lastname,
@@ -44,27 +43,30 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const { email, password } = req.body;
 
- 
     if (!email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
     }
 
     try {
-     
         const user = await Users.findOne({ where: { email } });
         if (!user) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
-
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
 
- 
-        const token = jwt.sign({ id: user.userId, email: user.email }, process.env.JWT_SECRET, {
-            expiresIn: '1h'
+        const token = jwt.sign({ userId: user.userId, email: user.email }, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+
+
+        res.cookie('token', token, {
+            httpOnly: true, 
+            maxAge: 3600000, 
+            sameSite: 'strict' 
         });
 
         res.status(200).json({ message: 'Login successful', token });
@@ -72,7 +74,13 @@ const login = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Server error' });
     }
+}
+
+
+const logout = (req, res) => {
+    res.status(200).json({ message: 'Logout successful' });
 };
 
 
-module.exports = { register, login };
+
+module.exports = { register, login, logout };
